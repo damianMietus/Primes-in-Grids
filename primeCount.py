@@ -27,6 +27,57 @@ def invalidDigitCountError(integer):
 	print ("invalid entry. You're input must have", integer, "digits in length. Please input again: ")
 	return
     
+def countPrimeHorizontalLine(line, pnFound, pnList, size):
+	addBool = True
+	tempLine = line
+	while (tempLine > 0.5):
+		print(tempLine)
+		addBool = True
+		if tempLine in pnFound:
+			addBool = False
+		if addBool == True:
+			if tempLine in pnList:
+				print("adding", tempLine, "To the list")
+				pnFound.append(tempLine)
+		
+		tempLine = int(tempLine/10)
+		
+		
+			'''
+	i = 0
+	intSize = 1
+	addBool = True
+	while (intSize < size+1):
+		
+		for i in range(0, size-intSize+1):
+			print ("i = ", i)
+			#get the part of line to check
+			temp = line[i:i+intSize]
+			addBool = True
+			
+			#check if it is not in our prime list
+			if temp in str(pnFound):
+				addBool = False
+				
+			#check if our number is prime
+			if addBool == True:
+				if temp in pnList:
+					pnFound.append(temp)
+					print("Found one")
+			
+			i = i + 1
+	
+		intSize = intSize + 1
+		print ("Reached the end of the while loop")
+		
+	
+	
+	return pnFound
+	'''
+		
+	return pnFound	
+		
+	
 #Main
 i = 0
 j = 0
@@ -35,7 +86,6 @@ number = int(input("Enter a number for the Prime Grid: "));
 grid = [[0 for x in range(number)] for y in range(number)]
 for i in range(0, number):
 	grid[i] = int(input(""));
-	print (digitCounter(grid[i]))
 	if digitCounter(grid[i]) != number:		
 		digitFlag = False
 		while (digitFlag == False):
@@ -44,9 +94,15 @@ for i in range(0, number):
 			if digitCounter(grid[i]) == number:
 				digitFlag = True
 		
-
-
+		
 print (grid)
-#primeNumbers = primeNumberFinder(1000)
-#print (primeNumbers[0], primeNumbers[1])
-#print (len(primeNumbers))
+
+
+
+
+primeNumbers = primeNumberFinder(999)
+print (primeNumbers)
+
+primeNumbersFound = []
+primeNumbersFound = countPrimeHorizontalLine(grid[0], primeNumbersFound, primeNumbers, number);
+print (primeNumbersFound)
