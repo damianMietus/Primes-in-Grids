@@ -1,4 +1,5 @@
 # Prime Number Counter 
+# This change was done with Github Desktop
 def primeNumberFinder(size):
     pnArray = [2, 3, 5]
     i = 7;
