@@ -1,5 +1,9 @@
+# Damian Mietus
+# Reddit Daily Programmer
+# Challenge #359 [Hard] Primes in Grids
+# Completed September 24
+
 # Prime Number Counter 
-# This change was done with Github Desktop
 def primeNumberFinder(size):
     pnArray = [2, 3, 5]
     i = 7;
@@ -36,9 +40,7 @@ def countPrimeLine(line, pnFound, pnList, size):
 	intSize = 1
 	addBool = True
 	while (intSize < size+1):
-		
 		for i in range(0, size-intSize+1):
-			#print ("i = ", i)
 			#get the part of line to check
 			temp = line[i:i+intSize]
 			addBool = True
@@ -51,13 +53,10 @@ def countPrimeLine(line, pnFound, pnList, size):
 			if addBool == True:
 				if temp in pnList:
 					pnFound.append(temp)
-					#print("Found one")
 			
 			i = i + 1
 	
-		intSize = intSize + 1
-		#print ("Reached the end of the while loop")
-	
+		intSize = intSize + 1	
 	
 	return pnFound
 	
@@ -70,25 +69,45 @@ def	getVerticalLine(grid, number, i):
 
 	return tempVertical
 	
-def getRightDiagonal(grid, number):
+def getRightDiagonal(grid, number, start):
 	tempDiag = ""
 	tempStr = ""
 	j = 0
-	for i in range (0, number):
+	for i in range (start, number):
 		tempStr = grid[i]
 		tempDiag = tempDiag + tempStr[j]
 		j = j + 1
 	return tempDiag
 	
-def getLeftDiagonal(grid, number):
+def getRightDiagonalExpr(grid, number, start, offSet):
+	j = offSet
+	temp = ""
+	for i in range (0, number):
+		str = grid[i]
+		if j < number:
+			temp = temp + str[j]
+		j = j + 1
+	return temp
+	
+def getLeftDiagonal(grid, number, start):
 	tempDiag = ""
 	tempStr = ""
 	j = number-1
-	for i in range (0, number):
+	for i in range (start, number):
 		tempStr = grid[i]
 		tempDiag = tempDiag + tempStr[j]
 		j = j - 1
 	return tempDiag
+	
+def getLeftDiagonalExpr(grid, number, start, offSet):
+	j = offSet
+	temp = ""
+	for i in range (0, number):
+		str = grid[i]
+		if j >= 0:
+			temp = temp + str[j]
+		j = j - 1
+	return temp
 		
 #Main
 i = 0
@@ -106,26 +125,20 @@ for i in range(0, number):
 			if digitCounter(grid[i]) == number:
 				digitFlag = True
 		
-
-
 pnGrid = []		
 for item in grid:
 	pnGrid.append(str(item))
-print (pnGrid)
-
-
-
 
 primeNumbersInt = primeNumberFinder(9999)
 primeNumbersStr = []
+
 for item in primeNumbersInt:
 	primeNumbersStr.append(str(item))
-
-#print (primeNumbersStr)
 
 primeNumbersFound = []
 tempVertical = ""
 tempRightDiagonal = ""
+
 for i in range (0, number):
 	#Horizontal
 	primeNumbersFound = countPrimeLine(pnGrid[i], primeNumbersFound, primeNumbersStr, number);
@@ -136,29 +149,47 @@ for i in range (0, number):
 	tempVertical = getVerticalLine(pnGrid, number, i)
 	primeNumbersFound = countPrimeLine(tempVertical, primeNumbersFound, primeNumbersStr, number);
 	tempReverse = reverseString(tempVertical)
-	primeNumbersFound = countPrimeLine(tempReverse, primeNumbersFound, primeNumbersStr, number);
-	
-
-	print("Vertical = ", tempVertical)
-	
+	primeNumbersFound = countPrimeLine(tempReverse, primeNumbersFound, primeNumbersStr, number);	
 
 #Diagonal
-tempRightDiagonal = getRightDiagonal(pnGrid, number)
+tempRightDiagonal = getRightDiagonal(pnGrid, number, 0)
 primeNumbersFound = countPrimeLine(tempRightDiagonal, primeNumbersFound, primeNumbersStr, number);
-#print("Right Diag =", tempRightDiagonal)
 tempReverse = reverseString(tempRightDiagonal)
 primeNumbersFound = countPrimeLine(tempReverse, primeNumbersFound, primeNumbersStr, number);
-#Check from center to up-right 
-#for i in range(0, number):
 
-tempLeftDiagonal = getLeftDiagonal(pnGrid, number)
+#Check from center to down-left 
+for i in range(0, number):
+	tempRightDiagonal = getRightDiagonal(pnGrid, number, i)
+	primeNumbersFound = countPrimeLine(tempRightDiagonal, primeNumbersFound, primeNumbersStr, number);	
+	tempReverse = reverseString(tempRightDiagonal)
+	primeNumbersFound = countPrimeLine(tempReverse, primeNumbersFound, primeNumbersStr, number);
+	
+#Check from center to up-right 	
+for i in range(0, number):
+	tempRightDiagonal = getRightDiagonalExpr(pnGrid, number, i-1, i+1)
+	primeNumbersFound = countPrimeLine(tempRightDiagonal, primeNumbersFound, primeNumbersStr, number);
+	tempReverse = reverseString(tempRightDiagonal)
+	primeNumbersFound = countPrimeLine(tempReverse, primeNumbersFound, primeNumbersStr, number);
+
+tempLeftDiagonal = getLeftDiagonal(pnGrid, number, 0)
 primeNumbersFound = countPrimeLine(tempLeftDiagonal, primeNumbersFound, primeNumbersStr, number);
-#print("Left Diag =", tempLeftDiagonal)
 tempReverse = reverseString(tempLeftDiagonal)
 primeNumbersFound = countPrimeLine(tempReverse, primeNumbersFound, primeNumbersStr, number);
 
-#primeNumbersFound = countPrimeLine(pnGrid[0], primeNumbersFound, primeNumbersStr, number);
-#primeNumbersFound = countPrimeLine(pnGrid[1], primeNumbersFound, primeNumbersStr, number);
+#Check from right to down-right 
+for i in range(0, number):
+	tempLeftDiagonal = getLeftDiagonal(pnGrid, number, i)
+	primeNumbersFound = countPrimeLine(tempLeftDiagonal, primeNumbersFound, primeNumbersStr, number);
+	tempReverse = reverseString(tempLeftDiagonal)
+	primeNumbersFound = countPrimeLine(tempReverse, primeNumbersFound, primeNumbersStr, number);
+	
+#Check from right to up-left
+for i in range(0, number-1):
+	tempLeftDiagonal = getLeftDiagonalExpr(pnGrid, number, i-1, i+1)
+	primeNumbersFound = countPrimeLine(tempLeftDiagonal, primeNumbersFound, primeNumbersStr, number);
+	tempReverse = reverseString(tempLeftDiagonal)
+	primeNumbersFound = countPrimeLine(tempReverse, primeNumbersFound, primeNumbersStr, number);
 
+	
 print ("Total Unique Prime Numbers: ", len(primeNumbersFound))
 print (primeNumbersFound)
