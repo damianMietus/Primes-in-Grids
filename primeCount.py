@@ -1,7 +1,7 @@
 # Damian Mietus
 # Reddit Daily Programmer
 # Challenge #359 [Hard] Primes in Grids
-# Completed September 24
+# Completed September 24 2018
 
 # Prime Number Counter 
 def primeNumberFinder(size):
