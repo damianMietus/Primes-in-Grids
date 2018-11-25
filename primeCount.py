@@ -189,7 +189,6 @@ for i in range(0, number-1):
 	primeNumbersFound = countPrimeLine(tempLeftDiagonal, primeNumbersFound, primeNumbersStr, number);
 	tempReverse = reverseString(tempLeftDiagonal)
 	primeNumbersFound = countPrimeLine(tempReverse, primeNumbersFound, primeNumbersStr, number);
-
 	
 print ("Total Unique Prime Numbers: ", len(primeNumbersFound))
 print (primeNumbersFound)
